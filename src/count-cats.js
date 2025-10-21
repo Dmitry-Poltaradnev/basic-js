@@ -20,6 +20,7 @@ function countCats(matrix) {
   matrix.flat().forEach((item) => {
     if (item === '^^') count++
   })
+  return count
 }
 
 module.exports = {
