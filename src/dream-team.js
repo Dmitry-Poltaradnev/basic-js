@@ -13,9 +13,9 @@ const { NotImplementedError } = require('../lib');
  * createDreamTeam(['Olivia', 1111, 'Lily', 'Oscar', true, null]) => 'LOO'
  *
  */
-function createDreamTeam(/* members */) {
+function createDreamTeam(members) {
   // Remove line below and write your code here
-  throw new NotImplementedError('Not implemented');
+  return members.filter((item) => typeof item === 'string').map((item) => item.trim().toUpperCase().slice(0, 1)).sort().join('')
 }
 
 module.exports = {
