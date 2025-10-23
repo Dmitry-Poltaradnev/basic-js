@@ -20,16 +20,49 @@ const { NotImplementedError } = require('../lib');
  *
  */
 class VigenereCipheringMachine {
-  encrypt() {
-    // Remove line below and write your code here
-    throw new NotImplementedError('Not implemented');
+  constructor(isDirect = true) {
+    this.isDirect = isDirect;
   }
 
-  decrypt() {
-    // Remove line below and write your code here
-    throw new NotImplementedError('Not implemented');
+  encrypt(message, key) {
+    if (!message || !key) throw new Error('Incorrect arguments!');
+    message = message.toUpperCase();
+    key = key.toUpperCase();
+
+    let keyIndex = 0;
+
+    const res = [...message].map(char => {
+      if (/[A-Z]/.test(char)) {
+        const shift = (char.charCodeAt(0) - 65 + key[keyIndex % key.length].charCodeAt(0) - 65) % 26;
+        keyIndex++;
+        return String.fromCharCode(shift + 65);
+      }
+      return char;
+    }).join('');
+
+    return this.isDirect ? res : res.split('').reverse().join('');
+  }
+
+  decrypt(message, key) {
+    if (!message || !key) throw new Error('Incorrect arguments!');
+    message = message.toUpperCase();
+    key = key.toUpperCase();
+
+    let keyIndex = 0;
+
+    const res = [...message].map(char => {
+      if (/[A-Z]/.test(char)) {
+        const shift = (char.charCodeAt(0) - key[keyIndex % key.length].charCodeAt(0) + 26) % 26;
+        keyIndex++;
+        return String.fromCharCode(shift + 65);
+      }
+      return char;
+    }).join('');
+
+    return this.isDirect ? res : res.split('').reverse().join('');
   }
 }
+
 
 module.exports = {
   directMachine: new VigenereCipheringMachine(),
